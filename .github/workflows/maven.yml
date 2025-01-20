@@ -40,10 +40,10 @@ jobs:
 
       - name: Upload Extent Report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: smoke-test-report
-          path: reports/extent.html # Path to the folder containing the report
+          path: reports/ # Path to the folder containing the report
 
   regression-tests:
     if: github.event_name == 'push'
@@ -72,7 +72,7 @@ jobs:
 
       - name: Upload Extent Report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: smoke-test-report
-          path: reports/extent.html  # Path to the folder containing the report
+          path: reports/  # Path to the folder containing the report
