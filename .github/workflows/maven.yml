@@ -63,6 +63,16 @@ jobs:
       - name: execute test
         run: mvn clean test -Dsuite=regression -X
 
+      - name: Check if reports folder exists
+        run: |
+          if [ -d reports ]; then
+            echo "Reports folder exists!";
+            ls -l reports/
+          else
+            echo "Reports folder not found!";
+            exit 1;
+          fi
+
       - name: upload build artifact
         if: always()
         uses: actions/upload-artifact@v4.6.0
@@ -70,8 +80,9 @@ jobs:
           name: logs
           path: logs/
 
-      - name: Deploy pages
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
+      - name: build Test Report 
+        if: always()
+        uses: actions/upload-artifact@v4.6.0
         with:
-          branch: gh-pages
-          folder: reports
+          name: test report
+          path: reports/
