@@ -70,9 +70,8 @@ jobs:
           name: logs
           path: logs/
 
-      - name: Upload Extent Report
-        if: always()
-        uses: actions/upload-artifact@v4.6.0
+      - name: Deploy pages
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
-          name: smoke-test-report
-          path: reports/  # Path to the folder containing the report
+          branch: gh-pages
+          folder: reports
