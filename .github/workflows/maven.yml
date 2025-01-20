@@ -38,12 +38,12 @@ jobs:
           name: logs
           path: logs/
 
-      - name: Upload Extent Report
+      - name: build Test Report 
         if: always()
         uses: actions/upload-artifact@v4.6.0
-        with:
+        with:  # Path to the folder containing the report
           name: smoke-test-report
-          path: reports/ # Path to the folder containing the report
+          path: reports/# Path to the folder containing the report
 
   regression-tests:
     if: github.event_name == 'push'
@@ -63,11 +63,6 @@ jobs:
       - name: execute test
         run: mvn clean test -Dsuite=regression -X
 
-      - name: List all files in the workspace
-        run: |
-          echo "Listing all files and directories in the workspace:"
-          ls -R
-
       - name: upload build artifact
         if: always()
         uses: actions/upload-artifact@v4.6.0
@@ -79,5 +74,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4.6.0
         with:  # Path to the folder containing the report
-          name: test report
+          name: regression-test-report
           path: reports/
