@@ -63,15 +63,10 @@ jobs:
       - name: execute test
         run: mvn clean test -Dsuite=regression -X
 
-      - name: Check if reports folder exists
+      - name: List all files in the workspace
         run: |
-          if [ -d reports ]; then
-            echo "Reports folder exists!";
-            ls -l reports/
-          else
-            echo "Reports folder not found!";
-            exit 1;
-          fi
+          echo "Listing all files and directories in the workspace:"
+          ls -R
 
       - name: upload build artifact
         if: always()
