@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4.6.0
         with:  # Path to the folder containing the report
           name: smoke-test-report
-          path: reports/# Path to the folder containing the report
+          path: reports/ # Path to the folder containing the report
 
   regression-tests:
     if: github.event_name == 'push'
