@@ -39,7 +39,7 @@ jobs:
           path: logs/
 
       - name: Upload Extent Report
-        if: success()
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: smoke-test-report
@@ -71,7 +71,7 @@ jobs:
           path: logs/
 
       - name: Upload Extent Report
-        if: success()
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: smoke-test-report

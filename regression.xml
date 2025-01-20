@@ -6,6 +6,13 @@
         <listener class-name="com.api.listener.TestListener" />
     </listeners>
 
+    <test name="signup test">
+        <!-- Include Test Classes -->
+        <classes>
+            <class name="com.api.test.SignUpTest" />
+        </classes>
+    </test>
+
     <test name="login test">
         <!-- Include Test Classes -->
         <classes>
