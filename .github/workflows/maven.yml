@@ -75,4 +75,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: smoke-test-report
-          path: reports/  # Path to the folder containing the report
+          path: reports/extent.html  # Path to the folder containing the report
