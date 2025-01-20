@@ -1,6 +1,7 @@
 package com.api.test;
 
 import com.api.base.AuthService;
+import com.api.base.TestBase;
 import com.api.models.request.LoginRequest;
 import com.api.models.response.LoginResponse;
 import io.restassured.response.Response;
@@ -10,9 +11,9 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.*;
 
 @Listeners(com.api.listener.TestListener.class)
-public class LoginTest {
+public class LoginTest extends TestBase {
 
-    @Test(description = "login test")
+    @Test(description = "login test", groups = {"regression"})
     public void login() {
         LoginRequest  loginRequest = new LoginRequest("sinha", "abc12345");
         AuthService authService = new AuthService();

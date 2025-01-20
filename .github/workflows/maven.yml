@@ -3,44 +3,76 @@ name: API Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    types:
+      - opened
+      - synchronize
   schedule:
     - cron: 0 13 * * *
 
 jobs:
-  build:
-
+  smoke-tests:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
       checks: write
       issues: write
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: execute test
-      run: mvn clean test -Dsuite=suite -X
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: execute test
+        run: mvn clean test -Dsuite=smoke -X
 
-    - name: upload build artifact
-      if: always()
-      uses: actions/upload-artifact@v4.6.0
-      with:
-        name: logs
-        path: logs/
+      - name: upload build artifact
+        if: always()
+        uses: actions/upload-artifact@v4.6.0
+        with:
+          name: logs
+          path: logs/
 
-    - name: Publish Test Report
-      if: always()
-      uses: dorny/test-reporter@v1
-      with:
-        name: TestNG Results
-        path: target/surefire-reports/junitreports/TEST-*.xml
-        reporter: java-junit
+      - name: Upload Extent Report
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: smoke-test-report
+          path: reports/  # Path to the folder containing the report
 
+  regression-tests:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: execute test
+        run: mvn clean test -Dsuite=regression -X
+
+      - name: upload build artifact
+        if: always()
+        uses: actions/upload-artifact@v4.6.0
+        with:
+          name: logs
+          path: logs/
+
+      - name: Upload Extent Report
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: smoke-test-report
+          path: reports/  # Path to the folder containing the report

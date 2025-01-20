@@ -1,6 +1,7 @@
 package com.api.test;
 
 import com.api.base.AuthService;
+import com.api.base.TestBase;
 import com.api.base.UserManagementService;
 import com.api.models.request.LoginRequest;
 import com.api.models.request.ProfileRequest;
@@ -11,10 +12,9 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(com.api.listener.TestListener.class)
-public class UserManagementTest {
+public class UserManagementTest extends TestBase {
 
-    @Test
+    @Test(description = "user management test", groups = {"regression, smoke"})
     public void getUserProfile() {
         AuthService authService = new AuthService();
         String token = authService.login(new LoginRequest("dipta1234", "dipta1234"))
@@ -27,7 +27,7 @@ public class UserManagementTest {
         Assert.assertEquals(userProfileResponse.getUsername(), "dipta1234");
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void updateProfileTest() {
         AuthService authService = new AuthService();
         String token = authService.login(new LoginRequest("dipta1234", "dipta1234"))
